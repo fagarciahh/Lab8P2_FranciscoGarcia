@@ -1,12 +1,17 @@
 package lab8p2_franciscogarcia;
 
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 public class Principal extends javax.swing.JFrame {
 
     public Principal() {
         initComponents();
+        adminPartida ap = new adminPartida("./partidas.cbm");
+        ap.cargarArchivo();
+        lista = ap.getPartidas();
         
     }
 
@@ -23,7 +28,7 @@ public class Principal extends javax.swing.JFrame {
         bt_eliminar = new javax.swing.JButton();
         bt_editar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tf_nombrePartida = new javax.swing.JTextField();
         bt_crearPartida = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -71,6 +76,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel3.setText("Nombre de partida:");
 
         bt_crearPartida.setText("Crear Partida");
+        bt_crearPartida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_crearPartidaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -87,7 +97,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(62, 62, 62)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1)
+                    .addComponent(tf_nombrePartida)
                     .addComponent(bt_crearPartida, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))
                 .addContainerGap(114, Short.MAX_VALUE))
         );
@@ -101,7 +111,7 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmb_partidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_nombrePartida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bt_iniciar)
@@ -272,11 +282,26 @@ public class Principal extends javax.swing.JFrame {
             ap.cargarArchivo();
             DefaultComboBoxModel modelo
                     = new DefaultComboBoxModel(
-                            ap.getPartidas().toArray());
-            cmb_partidas.setModel(modelo);            
+                            lista.toArray());
+            cmb_partidas.setModel(modelo);  
+            cmb_estrellas.setModel(modelo);
+            cmb_jugadores.setModel(modelo);
         }
         
     }//GEN-LAST:event_tabStateChanged
+
+    private void bt_crearPartidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_crearPartidaMouseClicked
+        
+        Partida p = new Partida(tf_nombrePartida.getText(), new Date());
+        adminPartida ap = new adminPartida("./partidas.cmb");
+        ap.cargarArchivo();
+        ap.getPartidas().add(p);
+        lista.add(p);
+        ap.escribirArchivo();
+        JOptionPane.showMessageDialog(this, "Partida creada exitosamente");
+        tf_nombrePartida.setText("");
+        
+    }//GEN-LAST:event_bt_crearPartidaMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -334,12 +359,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextArea ta_descripcion;
     private javax.swing.JTabbedPane tab;
     private javax.swing.JFormattedTextField tf_distancia;
     private javax.swing.JTextField tf_nombreEstrella;
     private javax.swing.JTextField tf_nombreJugador;
+    private javax.swing.JTextField tf_nombrePartida;
     private javax.swing.JFormattedTextField tf_velocidad;
     // End of variables declaration//GEN-END:variables
 

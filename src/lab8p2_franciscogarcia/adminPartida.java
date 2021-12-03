@@ -38,6 +38,10 @@ public class adminPartida {
         return "partidas=" + partidas;
     }
     
+    public void setPartidas(Partida a){
+        partidas.add(a);
+    }
+    
     public void cargarArchivo() {
         try {
             partidas = new ArrayList();
@@ -50,6 +54,7 @@ public class adminPartida {
                 try {
                     while ((temp = (Partida) objeto.readObject()) != null) {
                         partidas.add(temp);
+                        System.out.println(temp.toString());
                     }
                 } catch (EOFException e) {
                     //encontro el final del archivo

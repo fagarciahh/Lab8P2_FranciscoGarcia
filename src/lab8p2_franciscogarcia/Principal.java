@@ -12,7 +12,7 @@ public class Principal extends javax.swing.JFrame {
         adminPartida ap = new adminPartida("./partidas.cbm");
         ap.cargarArchivo();
         lista = ap.getPartidas();
-        
+        System.out.println(lista);
     }
 
     @SuppressWarnings("unchecked")
@@ -140,6 +140,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel7.setText("Nombre");
 
         bt_crearEstrella.setText("Crear Estrella");
+        bt_crearEstrella.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_crearEstrellaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -198,6 +203,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel10.setText("Partida");
 
         bt_crearJugador.setText("Crear Jugador");
+        bt_crearJugador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_crearJugadorMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -295,13 +305,48 @@ public class Principal extends javax.swing.JFrame {
         Partida p = new Partida(tf_nombrePartida.getText(), new Date());
         adminPartida ap = new adminPartida("./partidas.cmb");
         ap.cargarArchivo();
-        ap.getPartidas().add(p);
-        lista.add(p);
+        ap.setPartidas(p);
         ap.escribirArchivo();
         JOptionPane.showMessageDialog(this, "Partida creada exitosamente");
         tf_nombrePartida.setText("");
         
     }//GEN-LAST:event_bt_crearPartidaMouseClicked
+
+    private void bt_crearEstrellaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_crearEstrellaMouseClicked
+        
+        Partida temp = 
+                (Partida) cmb_estrellas.getSelectedItem();
+        if(temp != null){
+            String d = ta_descripcion.getText();
+            String n = tf_nombreEstrella.getText();
+            int r = Integer.parseInt(tf_distancia.getText());
+            
+            temp.getEstrellas().add(new Estrella(r,d,n));
+            
+            JOptionPane.showMessageDialog(this, "Se creo su estrella exitosamente");
+            
+            ta_descripcion.setText("");
+            tf_nombreEstrella.setText("");
+            tf_distancia.setText("");
+        }
+        
+    }//GEN-LAST:event_bt_crearEstrellaMouseClicked
+
+    private void bt_crearJugadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_crearJugadorMouseClicked
+       Partida temp = 
+                (Partida) cmb_estrellas.getSelectedItem();
+        if(temp != null){
+            String n = tf_nombreJugador.getText();
+            int v = Integer.parseInt(tf_velocidad.getText());
+            
+            temp.getJugadores().add(new Jugador(v,n));
+            
+            JOptionPane.showMessageDialog(this, "Se creo su jugador exitosamente");
+            
+            tf_nombreJugador.setText("");
+            tf_velocidad.setText("  ");
+        }
+    }//GEN-LAST:event_bt_crearJugadorMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

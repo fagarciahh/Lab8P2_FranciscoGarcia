@@ -295,6 +295,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Crear Estrella"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bt_crearEstrellaMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -397,6 +400,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Crear Jugador"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bt_crearJugadorMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

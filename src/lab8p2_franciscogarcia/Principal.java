@@ -17,6 +17,7 @@ public class Principal extends javax.swing.JFrame {
         System.out.println(lista);
         actualizarCombo();
         
+        
     }
     
     private void actualizarCombo(){
@@ -207,10 +208,6 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jd_juegoLayout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(18, 18, 18)
-                                .addComponent(lb_partida))
-                            .addGroup(jd_juegoLayout.createSequentialGroup()
                                 .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jd_juegoLayout.createSequentialGroup()
                                         .addComponent(jLabel12)
@@ -230,7 +227,12 @@ public class Principal extends javax.swing.JFrame {
                                         .addComponent(jLabel17)
                                         .addGap(18, 18, 18)
                                         .addComponent(lb_estrella))))
-                            .addComponent(barra, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jd_juegoLayout.createSequentialGroup()
+                                    .addComponent(jLabel11)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(lb_partida))
+                                .addComponent(barra, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jd_juegoLayout.createSequentialGroup()
                         .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jd_juegoLayout.createSequentialGroup()
@@ -317,6 +319,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         bt_editar.setText("Editar Partida");
+        bt_editar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_editarMouseClicked(evt);
+            }
+        });
 
         jLabel3.setText("Nombre de partida:");
 
@@ -623,34 +630,29 @@ public class Principal extends javax.swing.JFrame {
 
     private void bt_iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_iniciarActionPerformed
         
-        int n = cmb_partidas.getSelectedIndex();
+        int n = cmb_partidas.getSelectedIndex();     
         ArrayList<Jugador> jugadores = lista.get(n).getJugadores();
         ArrayList<Estrella> estrellas = lista.get(n).getEstrellas();
         
-        DefaultComboBoxModel m1 = (DefaultComboBoxModel)cmb_jugadores.getModel();
-        DefaultComboBoxModel m2 = (DefaultComboBoxModel)cmb_estrellas.getModel();
+        DefaultComboBoxModel m1 = (DefaultComboBoxModel)cmb_jugador.getModel();
+        DefaultComboBoxModel m2 = (DefaultComboBoxModel)cmb_estrella.getModel();
         
-        System.out.println(lista.get(n));
+        for (Jugador j : jugadores) {
+            m1.addElement(j);
+        }
         
         for (Estrella e : estrellas) {
             m2.addElement(e);
-            System.out.println(e);
         }
-        for (Jugador j : jugadores) {
-            m1.addElement(j);
-            System.out.println(j);
-        }
-                
+        cmb_jugador.setModel(m1);
+        cmb_estrella.setModel(m2);
+        
         lb_partida.setText(lista.get(n).toString());
         
         jd_juego.pack();
         jd_juego.setLocationRelativeTo(this);
         jd_juego.setModal(true);
         jd_juego.setVisible(true);   
-        
-        cmb_jugadores.setModel(m1);
-        cmb_estrellas.setModel(m2);
-        
         
         
         
@@ -661,7 +663,7 @@ public class Principal extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         
         int j = cmb_jugador.getSelectedIndex();
-        int e = cmb_estrellas.getSelectedIndex();
+        int e = cmb_estrella.getSelectedIndex();
         int n = cmb_partidas.getSelectedIndex();
         
         Jugador player = lista.get(n).getJugadores().get(j);
@@ -677,8 +679,8 @@ public class Principal extends javax.swing.JFrame {
             "Espera"
         };
         
-        modelo.addColumn(row);
-        tabla.setModel(modelo);       
+        modelo.addRow(row);
+        tabla.setModel(modelo);
 
     }//GEN-LAST:event_bt_agregarMouseClicked
 
@@ -695,8 +697,19 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_pausarMouseClicked
 
     private void bt_seguirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_seguirMouseClicked
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_bt_seguirMouseClicked
+
+    private void bt_editarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_editarMouseClicked
+        
+        int n = cmb_partidas.getSelectedIndex();
+        
+        String nombre = JOptionPane.showInputDialog("Ingrese un nuevo nombre");
+        lista.get(n).setNombre(nombre);
+        JOptionPane.showMessageDialog(this, "Nombre se cambio con exito");
+        actualizarCombo();
+        
+    }//GEN-LAST:event_bt_editarMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -784,4 +797,5 @@ public class Principal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 ArrayList<Partida> lista = new ArrayList();
+administrarThread ab;
 }

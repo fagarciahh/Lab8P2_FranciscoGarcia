@@ -8,17 +8,89 @@ import javax.swing.JOptionPane;
 public class Principal extends javax.swing.JFrame {
 
     public Principal() {
+        
         initComponents();
-        adminPartida ap = new adminPartida("./partidas.cbm");
+        adminPartida ap = new adminPartida(".//partidas.cbm");
         ap.cargarArchivo();
         lista = ap.getPartidas();
         System.out.println(lista);
+        actualizarCombo();
+        
     }
-
+    
+    private void actualizarCombo(){
+        
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel)cmb_partidas.getModel();
+        modelo.removeAllElements();
+        for (Partida partida : lista) {
+            modelo.addElement(partida);
+        }
+        cmb_estrellas.setModel(modelo);
+        cmb_jugadores.setModel(modelo);
+        cmb_partidas.setModel(modelo);
+        adminPartida ap = new adminPartida(".//partidas.cmb");
+        ap.setPartidas(lista);
+        ap.escribirArchivo();       
+    }
+    
+    private boolean verificarNombre(){
+        
+        for (Partida partida : lista) {
+            if(partida.getNombre().equals(tf_nombrePartida)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean verificarEstrella(){
+        
+        int x = cmb_estrellas.getSelectedIndex();
+        Partida p = lista.get(x);
+        for (Estrella e : p.getEstrellas()) {
+            if(e.getNombre().equals(tf_nombreEstrella)){
+                return true;
+            }
+        }
+        return false;
+        
+    }
+    
+    private boolean verificarJugador(){
+        
+        int x = cmb_estrellas.getSelectedIndex();
+        Partida p = lista.get(x);
+        for (Jugador e : p.getJugadores()) {
+            if(e.getNombre().equals(tf_nombreEstrella)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jd_juego = new javax.swing.JDialog();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        lb_jugador = new javax.swing.JLabel();
+        lb_distancia = new javax.swing.JLabel();
+        lb_partida = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        lb_estrella = new javax.swing.JLabel();
+        lb_dr = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabla = new javax.swing.JTable();
+        bt_comenzar = new javax.swing.JButton();
+        bt_pausar = new javax.swing.JButton();
+        cmb_jugador = new javax.swing.JComboBox<>();
+        bt_agregar = new javax.swing.JButton();
+        cmb_estrella = new javax.swing.JComboBox<>();
+        barra = new javax.swing.JProgressBar();
         jLabel1 = new javax.swing.JLabel();
         tab = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -50,6 +122,147 @@ public class Principal extends javax.swing.JFrame {
         cmb_jugadores = new javax.swing.JComboBox<>();
         bt_crearJugador = new javax.swing.JButton();
 
+        jLabel11.setText("Partida:");
+
+        jLabel12.setText("Jugador:");
+
+        jLabel13.setText("Distancia:");
+
+        lb_jugador.setText("___");
+
+        lb_distancia.setText("___");
+
+        lb_partida.setText("___");
+
+        jLabel17.setText("Estrella:");
+
+        jLabel18.setText("Distancia Recorrida:");
+
+        lb_estrella.setText("___");
+
+        lb_dr.setText("__");
+
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Jugador", "Velocidad", "Estrella", "Distancia", "Estado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tabla);
+
+        bt_comenzar.setText("Comenzar");
+
+        bt_pausar.setText("Pausar");
+
+        bt_agregar.setText("Agregar");
+
+        javax.swing.GroupLayout jd_juegoLayout = new javax.swing.GroupLayout(jd_juego.getContentPane());
+        jd_juego.getContentPane().setLayout(jd_juegoLayout);
+        jd_juegoLayout.setHorizontalGroup(
+            jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_juegoLayout.createSequentialGroup()
+                .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_juegoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2))
+                    .addGroup(jd_juegoLayout.createSequentialGroup()
+                        .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jd_juegoLayout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jd_juegoLayout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lb_partida))
+                                    .addGroup(jd_juegoLayout.createSequentialGroup()
+                                        .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jd_juegoLayout.createSequentialGroup()
+                                                .addComponent(jLabel12)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lb_jugador))
+                                            .addGroup(jd_juegoLayout.createSequentialGroup()
+                                                .addComponent(jLabel13)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lb_distancia)))
+                                        .addGap(141, 141, 141)
+                                        .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jd_juegoLayout.createSequentialGroup()
+                                                .addComponent(jLabel18)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lb_dr))
+                                            .addGroup(jd_juegoLayout.createSequentialGroup()
+                                                .addComponent(jLabel17)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lb_estrella))))
+                                    .addComponent(barra, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jd_juegoLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(bt_comenzar, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(bt_pausar, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jd_juegoLayout.createSequentialGroup()
+                                .addGap(47, 47, 47)
+                                .addComponent(cmb_jugador, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(bt_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmb_estrella, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jd_juegoLayout.setVerticalGroup(
+            jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_juegoLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(lb_partida))
+                .addGap(18, 18, 18)
+                .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(lb_jugador)
+                    .addComponent(jLabel17)
+                    .addComponent(lb_estrella))
+                .addGap(18, 18, 18)
+                .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(lb_distancia)
+                    .addComponent(jLabel18)
+                    .addComponent(lb_dr))
+                .addGap(18, 18, 18)
+                .addComponent(barra, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bt_comenzar)
+                    .addComponent(bt_pausar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bt_agregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmb_estrella, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmb_jugador))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("MENU PRINCIPAL");
@@ -63,6 +276,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel2.setText("Partida:");
 
         bt_iniciar.setText("Iniciar");
+        bt_iniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_iniciarActionPerformed(evt);
+            }
+        });
 
         bt_eliminar.setText("Eliminar Partida");
         bt_eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -281,12 +499,17 @@ public class Principal extends javax.swing.JFrame {
 
     private void bt_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_eliminarMouseClicked
         
+        if(cmb_partidas.getSelectedItem() != null){
+            lista.remove(cmb_partidas.getSelectedIndex());
+            actualizarCombo();
+        }else{
+            JOptionPane.showMessageDialog(this, "No hay nada que borrar");
+        }
         
         
     }//GEN-LAST:event_bt_eliminarMouseClicked
 
     private void tabStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabStateChanged
-        
         if (tab.getSelectedIndex() == 1) {
             adminPartida ap = new adminPartida("./partidas.cbm");
             ap.cargarArchivo();
@@ -297,56 +520,86 @@ public class Principal extends javax.swing.JFrame {
             cmb_estrellas.setModel(modelo);
             cmb_jugadores.setModel(modelo);
         }
-        
     }//GEN-LAST:event_tabStateChanged
 
     private void bt_crearPartidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_crearPartidaMouseClicked
         
-        Partida p = new Partida(tf_nombrePartida.getText(), new Date());
-        adminPartida ap = new adminPartida("./partidas.cmb");
-        ap.cargarArchivo();
-        ap.setPartidas(p);
-        ap.escribirArchivo();
-        JOptionPane.showMessageDialog(this, "Partida creada exitosamente");
-        tf_nombrePartida.setText("");
+        if (verificarNombre()) {
+            JOptionPane.showMessageDialog(this, "Ya existe una partida con ese nombre");
+            tf_nombrePartida.setText("");
+        }else{
+            
+            Partida p = new Partida(tf_nombrePartida.getText(), new Date());
+            lista.add(p);
+            actualizarCombo();
+            JOptionPane.showMessageDialog(this, "Partida creada exitosamente");
+            tf_nombrePartida.setText("");
+            
+        }
         
     }//GEN-LAST:event_bt_crearPartidaMouseClicked
 
     private void bt_crearEstrellaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_crearEstrellaMouseClicked
         
-        Partida temp = 
-                (Partida) cmb_estrellas.getSelectedItem();
-        if(temp != null){
-            String d = ta_descripcion.getText();
-            String n = tf_nombreEstrella.getText();
-            int r = Integer.parseInt(tf_distancia.getText());
-            
-            temp.getEstrellas().add(new Estrella(r,d,n));
-            
-            JOptionPane.showMessageDialog(this, "Se creo su estrella exitosamente");
-            
-            ta_descripcion.setText("");
+        if(verificarEstrella()){
+            JOptionPane.showMessageDialog(this, "Ya existe una Estrella con ese nombre");
             tf_nombreEstrella.setText("");
-            tf_distancia.setText("");
+        }else{
+            Partida temp
+                    = (Partida) cmb_estrellas.getSelectedItem();
+            if (temp != null) {
+                String d = ta_descripcion.getText();
+                String n = tf_nombreEstrella.getText();
+                int r = Integer.parseInt(tf_distancia.getText());
+
+                temp.getEstrellas().add(new Estrella(r, d, n));
+
+                JOptionPane.showMessageDialog(this, "Se creo su estrella exitosamente");
+
+                ta_descripcion.setText("");
+                tf_nombreEstrella.setText("");
+                tf_distancia.setText("");
+            }
         }
+        
         
     }//GEN-LAST:event_bt_crearEstrellaMouseClicked
 
     private void bt_crearJugadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_crearJugadorMouseClicked
-       Partida temp = 
-                (Partida) cmb_estrellas.getSelectedItem();
-        if(temp != null){
-            String n = tf_nombreJugador.getText();
-            int v = Integer.parseInt(tf_velocidad.getText());
+        
+        
+        if(verificarJugador()){
             
-            temp.getJugadores().add(new Jugador(v,n));
-            
-            JOptionPane.showMessageDialog(this, "Se creo su jugador exitosamente");
-            
+            JOptionPane.showMessageDialog(this, "Ya existe un Jugador con ese nombre");
             tf_nombreJugador.setText("");
-            tf_velocidad.setText("  ");
+            
+        }else{
+            Partida temp
+                    = (Partida) cmb_estrellas.getSelectedItem();
+            if (temp != null) {
+                String n = tf_nombreJugador.getText();
+                int v = Integer.parseInt(tf_velocidad.getText());
+
+                temp.getJugadores().add(new Jugador(v, n));
+
+                JOptionPane.showMessageDialog(this, "Se creo su jugador exitosamente");
+
+                tf_nombreJugador.setText("");
+                tf_velocidad.setText("  ");
+                
+            }
         }
+        
     }//GEN-LAST:event_bt_crearJugadorMouseClicked
+
+    private void bt_iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_iniciarActionPerformed
+        
+        jd_juego.pack();
+        jd_juego.setLocationRelativeTo(this);
+        jd_juego.setModal(true);
+        jd_juego.setVisible(true);   
+        
+    }//GEN-LAST:event_bt_iniciarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -381,17 +634,28 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar barra;
+    private javax.swing.JButton bt_agregar;
+    private javax.swing.JButton bt_comenzar;
     private javax.swing.JButton bt_crearEstrella;
     private javax.swing.JButton bt_crearJugador;
     private javax.swing.JButton bt_crearPartida;
     private javax.swing.JButton bt_editar;
     private javax.swing.JButton bt_eliminar;
     private javax.swing.JButton bt_iniciar;
+    private javax.swing.JButton bt_pausar;
+    private javax.swing.JComboBox<String> cmb_estrella;
     private javax.swing.JComboBox<String> cmb_estrellas;
+    private javax.swing.JComboBox<String> cmb_jugador;
     private javax.swing.JComboBox<String> cmb_jugadores;
     private javax.swing.JComboBox<String> cmb_partidas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -404,8 +668,16 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JDialog jd_juego;
+    private javax.swing.JLabel lb_distancia;
+    private javax.swing.JLabel lb_dr;
+    private javax.swing.JLabel lb_estrella;
+    private javax.swing.JLabel lb_jugador;
+    private javax.swing.JLabel lb_partida;
     private javax.swing.JTextArea ta_descripcion;
     private javax.swing.JTabbedPane tab;
+    private javax.swing.JTable tabla;
     private javax.swing.JFormattedTextField tf_distancia;
     private javax.swing.JTextField tf_nombreEstrella;
     private javax.swing.JTextField tf_nombreJugador;

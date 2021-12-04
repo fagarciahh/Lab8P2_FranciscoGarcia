@@ -46,21 +46,22 @@ public class adminPartida {
         try {
             partidas = new ArrayList();
             Partida temp;
+            System.out.println("I");
             if (archivo.exists()) {
-                FileInputStream entrada
-                        = new FileInputStream(archivo);
-                ObjectInputStream objeto
-                        = new ObjectInputStream(entrada);
+                    System.out.println("I");
+                ObjectInputStream objeto = new ObjectInputStream(new FileInputStream("./partidas.cmb"));
+                System.out.println("I");
                 try {
+                    System.out.println("I");
                     while ((temp = (Partida) objeto.readObject()) != null) {
                         partidas.add(temp);
                         System.out.println(temp.toString());
                     }
+                    System.out.println("E");
                 } catch (EOFException e) {
                     //encontro el final del archivo
                 }
                 objeto.close();
-                entrada.close();
             }
         } catch (Exception ex) {
             ex.printStackTrace();

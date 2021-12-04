@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -172,6 +173,11 @@ public class Principal extends javax.swing.JFrame {
         bt_pausar.setText("Pausar");
 
         bt_agregar.setText("Agregar");
+        bt_agregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_agregarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_juegoLayout = new javax.swing.GroupLayout(jd_juego.getContentPane());
         jd_juego.getContentPane().setLayout(jd_juegoLayout);
@@ -559,6 +565,7 @@ public class Principal extends javax.swing.JFrame {
                 ta_descripcion.setText("");
                 tf_nombreEstrella.setText("");
                 tf_distancia.setText("");
+                actualizarCombo();
             }
         }
         
@@ -585,7 +592,8 @@ public class Principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Se creo su jugador exitosamente");
 
                 tf_nombreJugador.setText("");
-                tf_velocidad.setText("  ");
+                tf_velocidad.setText("");
+                actualizarCombo();
                 
             }
         }
@@ -594,12 +602,61 @@ public class Principal extends javax.swing.JFrame {
 
     private void bt_iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_iniciarActionPerformed
         
+        int n = cmb_partidas.getSelectedIndex();
+        ArrayList<Jugador> jugadores = lista.get(n).getJugadores();
+        ArrayList<Estrella> estrellas = lista.get(n).getEstrellas();
+        
+        DefaultComboBoxModel m1 = (DefaultComboBoxModel)cmb_jugadores.getModel();
+        DefaultComboBoxModel m2 = (DefaultComboBoxModel)cmb_estrellas.getModel();
+        
+        for (Estrella e : estrellas) {
+            m2.addElement(e);
+        }
+        for (Jugador j : jugadores) {
+            m1.addElement(j);
+        }
+        
+        cmb_jugadores.setModel(m1);
+        cmb_estrellas.setModel(m2);
+        
+        
+        
+        lb_partida.setText(lista.get(n).toString());
+        
         jd_juego.pack();
         jd_juego.setLocationRelativeTo(this);
         jd_juego.setModal(true);
         jd_juego.setVisible(true);   
         
+        
+        
     }//GEN-LAST:event_bt_iniciarActionPerformed
+
+    private void bt_agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_agregarMouseClicked
+
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        
+        int j = cmb_jugador.getSelectedIndex();
+        int e = cmb_estrellas.getSelectedIndex();
+        int n = cmb_partidas.getSelectedIndex();
+        
+        Jugador player = lista.get(n).getJugadores().get(j);
+        Estrella estrella = lista.get(n).getEstrellas().get(e);
+        
+        
+        
+        Object[] row ={
+            player.getNombre(),
+            player.getVelocidad(),
+            estrella.getNombre(),
+            estrella.getDistancia(),
+            "Espera"
+        };
+        
+        modelo.addColumn(row);
+        tabla.setModel(modelo);       
+
+    }//GEN-LAST:event_bt_agregarMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

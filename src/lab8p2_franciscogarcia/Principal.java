@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -679,6 +681,8 @@ public class Principal extends javax.swing.JFrame {
             "Espera"
         };
         
+        array.add(row);
+        
         modelo.addRow(row);
         tabla.setModel(modelo);
 
@@ -686,7 +690,15 @@ public class Principal extends javax.swing.JFrame {
 
     private void bt_comenzarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_comenzarMouseClicked
         
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         
+        for(int i = 0; i < array.size(); i++){
+            
+            int v = Integer.parseInt(modelo.getValueAt(i, 1).toString());
+            int d = Integer.parseInt(modelo.getValueAt(i, 3).toString());
+            
+            ab = administrarThread(barra,d,v);
+        }
         
     }//GEN-LAST:event_bt_comenzarMouseClicked
 
@@ -797,5 +809,11 @@ public class Principal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 ArrayList<Partida> lista = new ArrayList();
+ArrayList array = new ArrayList();
 administrarThread ab;
+
+    private administrarThread administrarThread(JProgressBar barra, int d, int v) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

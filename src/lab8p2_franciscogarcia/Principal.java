@@ -29,7 +29,7 @@ public class Principal extends javax.swing.JFrame {
         cmb_estrellas.setModel(modelo);
         cmb_jugadores.setModel(modelo);
         cmb_partidas.setModel(modelo);
-        adminPartida ap = new adminPartida(".//partidas.cmb");
+        adminPartida ap = new adminPartida(".//partidas.cbm");
         ap.setPartidas(lista);
         ap.escribirArchivo();       
     }
@@ -37,7 +37,7 @@ public class Principal extends javax.swing.JFrame {
     private boolean verificarNombre(){
         
         for (Partida partida : lista) {
-            if(partida.getNombre().equals(tf_nombrePartida)){
+            if(tf_nombrePartida.equals(partida.getNombre())){
                 return true;
             }
         }
@@ -92,6 +92,7 @@ public class Principal extends javax.swing.JFrame {
         bt_agregar = new javax.swing.JButton();
         cmb_estrella = new javax.swing.JComboBox<>();
         barra = new javax.swing.JProgressBar();
+        bt_seguir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         tab = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -169,13 +170,30 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tabla);
 
         bt_comenzar.setText("Comenzar");
+        bt_comenzar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_comenzarMouseClicked(evt);
+            }
+        });
 
         bt_pausar.setText("Pausar");
+        bt_pausar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_pausarMouseClicked(evt);
+            }
+        });
 
         bt_agregar.setText("Agregar");
         bt_agregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bt_agregarMouseClicked(evt);
+            }
+        });
+
+        bt_seguir.setText("Seguir");
+        bt_seguir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_seguirMouseClicked(evt);
             }
         });
 
@@ -186,51 +204,53 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jd_juegoLayout.createSequentialGroup()
                 .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jd_juegoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2))
-                    .addGroup(jd_juegoLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jd_juegoLayout.createSequentialGroup()
-                                .addGap(15, 15, 15)
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(lb_partida))
+                            .addGroup(jd_juegoLayout.createSequentialGroup()
                                 .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jd_juegoLayout.createSequentialGroup()
-                                        .addComponent(jLabel11)
+                                        .addComponent(jLabel12)
                                         .addGap(18, 18, 18)
-                                        .addComponent(lb_partida))
+                                        .addComponent(lb_jugador))
                                     .addGroup(jd_juegoLayout.createSequentialGroup()
-                                        .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jd_juegoLayout.createSequentialGroup()
-                                                .addComponent(jLabel12)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(lb_jugador))
-                                            .addGroup(jd_juegoLayout.createSequentialGroup()
-                                                .addComponent(jLabel13)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(lb_distancia)))
-                                        .addGap(141, 141, 141)
-                                        .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jd_juegoLayout.createSequentialGroup()
-                                                .addComponent(jLabel18)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(lb_dr))
-                                            .addGroup(jd_juegoLayout.createSequentialGroup()
-                                                .addComponent(jLabel17)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(lb_estrella))))
-                                    .addComponent(barra, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jd_juegoLayout.createSequentialGroup()
+                                        .addComponent(jLabel13)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lb_distancia)))
+                                .addGap(141, 141, 141)
+                                .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jd_juegoLayout.createSequentialGroup()
+                                        .addComponent(jLabel18)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lb_dr))
+                                    .addGroup(jd_juegoLayout.createSequentialGroup()
+                                        .addComponent(jLabel17)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lb_estrella))))
+                            .addComponent(barra, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jd_juegoLayout.createSequentialGroup()
+                        .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jd_juegoLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(bt_comenzar, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(bt_pausar, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jd_juegoLayout.createSequentialGroup()
+                                .addComponent(bt_comenzar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jd_juegoLayout.createSequentialGroup()
                                 .addGap(47, 47, 47)
-                                .addComponent(cmb_jugador, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(bt_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(cmb_estrella, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(cmb_jugador, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(bt_agregar, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                            .addComponent(bt_pausar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmb_estrella, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bt_seguir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(14, 14, 14))
+            .addGroup(jd_juegoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
         jd_juegoLayout.setVerticalGroup(
@@ -259,7 +279,8 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bt_comenzar)
-                    .addComponent(bt_pausar))
+                    .addComponent(bt_pausar)
+                    .addComponent(bt_seguir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jd_juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -609,24 +630,27 @@ public class Principal extends javax.swing.JFrame {
         DefaultComboBoxModel m1 = (DefaultComboBoxModel)cmb_jugadores.getModel();
         DefaultComboBoxModel m2 = (DefaultComboBoxModel)cmb_estrellas.getModel();
         
+        System.out.println(lista.get(n));
+        
         for (Estrella e : estrellas) {
             m2.addElement(e);
+            System.out.println(e);
         }
         for (Jugador j : jugadores) {
             m1.addElement(j);
+            System.out.println(j);
         }
-        
-        cmb_jugadores.setModel(m1);
-        cmb_estrellas.setModel(m2);
-        
-        
-        
+                
         lb_partida.setText(lista.get(n).toString());
         
         jd_juego.pack();
         jd_juego.setLocationRelativeTo(this);
         jd_juego.setModal(true);
         jd_juego.setVisible(true);   
+        
+        cmb_jugadores.setModel(m1);
+        cmb_estrellas.setModel(m2);
+        
         
         
         
@@ -657,6 +681,22 @@ public class Principal extends javax.swing.JFrame {
         tabla.setModel(modelo);       
 
     }//GEN-LAST:event_bt_agregarMouseClicked
+
+    private void bt_comenzarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_comenzarMouseClicked
+        
+        
+        
+    }//GEN-LAST:event_bt_comenzarMouseClicked
+
+    private void bt_pausarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_pausarMouseClicked
+
+
+        
+    }//GEN-LAST:event_bt_pausarMouseClicked
+
+    private void bt_seguirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_seguirMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_seguirMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -701,6 +741,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton bt_eliminar;
     private javax.swing.JButton bt_iniciar;
     private javax.swing.JButton bt_pausar;
+    private javax.swing.JButton bt_seguir;
     private javax.swing.JComboBox<String> cmb_estrella;
     private javax.swing.JComboBox<String> cmb_estrellas;
     private javax.swing.JComboBox<String> cmb_jugador;

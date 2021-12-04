@@ -49,7 +49,7 @@ public class adminPartida {
             System.out.println("I");
             if (archivo.exists()) {
                     System.out.println("I");
-                ObjectInputStream objeto = new ObjectInputStream(new FileInputStream("./partidas.cmb"));
+                ObjectInputStream objeto = new ObjectInputStream(new FileInputStream("./partidas.cbm"));
                 System.out.println("I");
                 try {
                     System.out.println("I");

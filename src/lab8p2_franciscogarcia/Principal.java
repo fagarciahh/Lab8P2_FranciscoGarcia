@@ -698,6 +698,11 @@ public class Principal extends javax.swing.JFrame {
             int d = Integer.parseInt(modelo.getValueAt(i, 3).toString());
             
             ab = administrarThread(barra,d,v);
+            lb_jugador.setText(modelo.getValueAt(i,0).toString());
+            lb_estrella.setText(modelo.getValueAt(i,2).toString());
+            lb_distancia.setText(modelo.getValueAt(i,3).toString());
+            
+            ab.start();
         }
         
     }//GEN-LAST:event_bt_comenzarMouseClicked
